@@ -8,27 +8,38 @@
         <link rel="stylesheet" href="css/style.css" />
     </head>
     <body>
-        <!-- <audio src="./assets/audio.mp3" controls></audio> -->
-        <div class="audio-player">
-            <button class="play-pause-btn">
-            </button>
-            <!-- <input type="text"> -->
-            <input min="0" value="0" type="range" class="duration-slider" />
-            <p class="audio-duration">00:00</p>
-            <select class="audio-speed">
-              <option value="0.5">0.5x</option>
-              <option value="1" selected >1x</option>
-              <option value="1.5">1.5x</option>
-            </select>
-            <button class="audio-sound"></button>
-
+        <div class="player">
+            <div class="track" id="track">
+                <div class="title" id="title"></div>
+                <div class="subtitle" id="subtitle"></div>
+                <div class="timeline">
+                    <div id="timer">0:00</div>
+                    <div class="progress-container">
+                        <div class="progress" id="progress"></div>
+                    </div>
+                    <div id="duration">0:00</div>
+                </div>
+            </div>
+            <div class="container-player">
+                <div class="container-thumb" id="c_thumb">
+                    <div class="thumb" id="thumb">
+                        <img
+                            src="https://res.cloudinary.com/n3pu/image/upload/v1571935272/bee-macro-flower-blossom-bloom-insect-plant.jpg"
+                        />
+                        <div class="axis"></div>
+                    </div>
+                </div>
+                <div class="controlsOuter">
+                    <div class="controlsInner">
+                        <div class="btn fas fa-play play" id="playBtn"></div>
+                        <div class="btn fas fa-pause pause" id="pauseBtn"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- js file  -->
+
         <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"
-            integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
+            src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.2/howler.min.js"
         ></script>
         <script src="./js/script.js"></script>
     </body>
