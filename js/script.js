@@ -29,27 +29,17 @@ audio1.once("load", function () {
         // start timer function
         timerFunction = setInterval(() => {
             // update timer
-            console.log(timer)
+            console.log(timer);
 
             progress1.setAttribute("value", timer);
             timer++;
-            console.log(audio1.seek() > timer)
+            console.log(audio1.seek() > timer);
             // if (Math.round(audio1.seek()) <= timer) {
             //   timer = 1;
             //   clearInterval(timerFunction);
             // }
         }, 1000);
     });
-
-    // audio1.on("seek", () => {
-    //   clearInterval(timerFunction);
-    //     timerFunction = setInterval(() => {
-    //         // update timer
-
-    //         progress1.setAttribute("value", timer);
-    //         timer++;
-    //     }, 1000);
-    // });
 
     // pause
     const pause1 = document.querySelector("#pauseBtn1");
@@ -65,9 +55,16 @@ audio1.once("load", function () {
     // change progress bar on interaction
 
     progress1.addEventListener("change", (e) => {
+        clearInterval(timerFunction);
         timer = e.target.value;
         progress1.setAttribute("value", e.target.value);
         audio1.seek(e.target.value);
+        // start new timer
+        timerFunction = setInterval(() => {
+            // progress1.setAttribute("value", timer);
+            progress1.value = timer;
+            timer++;
+        }, 1000);
     });
 
     // change speed of audio
@@ -98,7 +95,10 @@ audio1.once("load", function () {
         }
     });
 
-    audio1.on('end', function () {
-      console.log('song complete')
-    })
+    audio1.on("end", function () {
+        timer = 0;
+        clearInterval(timerFunction);
+        pauseBtn1.style.display = "none";
+        play1.style.display = "block";
+    });
 });
