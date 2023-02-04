@@ -32,7 +32,7 @@ body {
     }
 }
 
-.volume-slider {
+.duration-slider {
     margin: 10px 2.5%;
     width: 58%;
     position: relative;
@@ -44,16 +44,16 @@ body {
     background-color: #808080;
     border-radius: 10px;
 }
-.volume-slider::-webkit-slider-runnable-track {
+.duration-slider::-webkit-slider-runnable-track {
     // background: rgba(0, 125, 181, 0.6);
 }
-.volume-slider::-moz-range-track {
+.duration-slider::-moz-range-track {
     // background: rgba(0, 125, 181, 0.6);
 }
-.volume-slider::-ms-fill-upper {
+.duration-slider::-ms-fill-upper {
     background: rgba(0, 125, 181, 0.6);
 }
-.volume-slider::before {
+.duration-slider::before {
     width: var(--volume-before-width);
 }
 
