@@ -148,6 +148,14 @@ var audio1 = new Howl({
 });
 
 audio1.once("load", function () {
+    // update duration
+    function formatTime(secs) {
+        var minutes = Math.floor(secs / 60) || 0;
+        var seconds = secs - minutes * 60 || 0;
+        return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+    }
+    const durationElement = document.querySelector("#duration1");
+    durationElement.innerHTML = formatTime(Math.round(audio1.duration()))
     // update the progress bar
     const progress1 = document.querySelector("#progress1");
     // play
@@ -196,6 +204,14 @@ audio1.once("load", function () {
     // mute and unmute function
     const sound = document.querySelector("#sound1");
     sound.addEventListener("click", () => {
+        // duration
+        function formatTime(secs) {
+            var minutes = Math.floor(secs / 60) || 0;
+            var seconds = secs - minutes * 60 || 0;
+            return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+        }
+        // self.formatTime(Math.round(sound.duration()));
+        console.log(formatTime(Math.round(audio1.duration())));
         // console.log(audio1._muted);
         // audio1.mute(true);
         // audio1._muted ? audio1.mute(false) : audio1.mute(true);
