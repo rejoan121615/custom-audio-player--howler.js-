@@ -55,7 +55,6 @@ Player.prototype = {
         // Begin playing the sound.
         sound.play();
 
-
         // Show the pause button.
         if (sound.state() === "loaded") {
             playBtn.style.display = "none";
@@ -91,13 +90,16 @@ Player.prototype = {
      * The step called within requestAnimationFrame to update the playback position.
      */
     step: function () {
-      var self = this;
+        var self = this;
         // Get the Howl we want to manipulate.
         var sound = self.playlist[self.index].howl;
         // Determine our current seek position.
         // get seek value
         var seek = sound.seek() || 0;
-        progress.setAttribute("value", (sound.seek() / sound.duration()) * 100 || 0);
+        progress.setAttribute(
+            "value",
+            (sound.seek() / sound.duration()) * 100 || 0
+        );
         // If the sound is still playing, continue stepping.
         if (sound.playing()) {
             requestAnimationFrame(self.step.bind(self));
@@ -115,7 +117,6 @@ Player.prototype = {
 
         return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
     },
-
 };
 
 // Setup our new audio player class and pass it the playlist.
@@ -136,40 +137,39 @@ pauseBtn.addEventListener("click", function () {
     player.pause();
 });
 
+// ------------------------------------------------------------
+var timer = 0;
 
-// ------------------------------------------------------------ 
-
+var timerFunction;
 
 var audio1 = new Howl({
-  src: "https://res.cloudinary.com/n3pu/video/upload/v1571849541/80s_vibe.mp3"
-})
+    src: "https://res.cloudinary.com/n3pu/video/upload/v1571849541/80s_vibe.mp3",
+});
 
-// play 
+// play
 const play1 = document.querySelector("#playBtn1");
 const pauseBtn1 = document.querySelector("#pauseBtn1");
 
+play1.addEventListener("click", () => {
+    audio1.play();
+    play1.style.display = "none";
+    pauseBtn1.style.display = "block";
+    // start timer function
+    timerFunction = setInterval(() => {
+        // update timer
+        const progress1 = document.querySelector("#progress1");
+        progress1.setAttribute("value", timer);
+        timer++;
+    }, 1000);
+});
 
-play1.addEventListener('click', () => {
-  audio1.play();
-  play1.style.display = 'none';
-  pauseBtn1.style.display = 'block';
-})
-
-
-
-
-
-// pause 
+// pause
 const pause1 = document.querySelector("#pauseBtn1");
 
 pauseBtn1.addEventListener("click", () => {
     audio1.pause();
     pauseBtn1.style.display = "none";
     play1.style.display = "block";
+    // clear interval
+    clearInterval(timerFunction);
 });
-
-
-
-
-
-
