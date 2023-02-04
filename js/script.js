@@ -28,10 +28,6 @@ elms.forEach(function (elm) {
 var Player = function (playlist) {
     this.playlist = playlist;
     this.index = 0;
-
-    // Display the title of the first track.
-    title.innerHTML = playlist[0].title;
-  subtitle.innerHTML = playlist[0].subtitle;
 };
 Player.prototype = {
     /**
@@ -60,8 +56,6 @@ Player.prototype = {
                     duration.innerHTML = self.formatTime(
                         Math.round(sound.duration())
                     );
-                    thumb.classList.add("spin");
-                    c_thumb.classList.add("shadow");
                     // track.classList.add("up");
                     // Start upating the progress of the track.
                     requestAnimationFrame(self.step.bind(self));
@@ -72,22 +66,14 @@ Player.prototype = {
         // Begin playing the sound.
         sound.play();
 
-        // Update the track display.
-        title.innerHTML = data.title;
-        subtitle.innerHTML = data.subtitle;
 
         // Show the pause button.
         if (sound.state() === "loaded") {
             playBtn.style.display = "none";
             pauseBtn.style.display = "block";
-            thumb.classList.add("spin");
-            c_thumb.classList.add("shadow");
-            // track.classList.add("up");
         } else {
             playBtn.style.display = "none";
             pauseBtn.style.display = "block";
-            thumb.classList.remove("spin");
-            c_thumb.classList.remove("shadow");
             // track.classList.remove("up");
         }
 
@@ -110,9 +96,6 @@ Player.prototype = {
         // Show the play button.
         playBtn.style.display = "block";
         pauseBtn.style.display = "none";
-        thumb.classList.remove("spin");
-        c_thumb.classList.remove("shadow");
-        // track.classList.remove("up");
     },
 
     /**
@@ -125,7 +108,6 @@ Player.prototype = {
         // Determine our current seek position.
         // get seek value
         var seek = sound.seek() || 0;
-        timer.innerHTML = self.formatTime(Math.round(seek));
         progress.setAttribute("value", (sound.seek() / sound.duration()) * 100 || 0);
         // If the sound is still playing, continue stepping.
         if (sound.playing()) {
