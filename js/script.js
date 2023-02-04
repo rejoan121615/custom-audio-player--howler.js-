@@ -31,7 +31,7 @@ var Player = function (playlist) {
 
     // Display the title of the first track.
     title.innerHTML = playlist[0].title;
-    subtitle.innerHTML = playlist[0].subtitle;
+  subtitle.innerHTML = playlist[0].subtitle;
 };
 Player.prototype = {
     /**
@@ -119,16 +119,14 @@ Player.prototype = {
      * The step called within requestAnimationFrame to update the playback position.
      */
     step: function () {
-        var self = this;
-
+      var self = this;
         // Get the Howl we want to manipulate.
         var sound = self.playlist[self.index].howl;
-
         // Determine our current seek position.
+        // get seek value
         var seek = sound.seek() || 0;
         timer.innerHTML = self.formatTime(Math.round(seek));
-        progress.style.width = ((seek / sound.duration()) * 100 || 0) + "%";
-
+        progress.setAttribute("value", (sound.seek() / sound.duration()) * 100 || 0);
         // If the sound is still playing, continue stepping.
         if (sound.playing()) {
             requestAnimationFrame(self.step.bind(self));
@@ -146,6 +144,7 @@ Player.prototype = {
 
         return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
     },
+
 };
 
 // Setup our new audio player class and pass it the playlist.
