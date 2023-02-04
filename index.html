@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="css/style.css" />
+    </head>
+    <body>
+        <!-- <audio src="./assets/audio.mp3" controls></audio> -->
+        <div class="audio-player">
+            <button class="play-pause-btn">
+            </button>
+            <!-- <input type="text"> -->
+            <input min="0" max="2300" value="100" type="range" class="volume-slider" />
+            <p class="audio-duration">00:00</p>
+            <select class="audio-speed">
+              <option value="0.5">0.5x</option>
+              <option value="1" selected >1x</option>
+              <option value="1.5">1.5x</option>
+            </select>
+            <button class="audio-sound"></button>
+
+        </div>
+        <!-- js file  -->
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"
+            integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+        <script src="./js/script.js"></script>
+    </body>
+</html>

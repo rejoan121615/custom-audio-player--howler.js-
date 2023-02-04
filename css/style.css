@@ -1,0 +1,82 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.audio-player {
+  width: 75%;
+  max-width: 450px;
+  background-color: black;
+  border-radius: 8px;
+  height: 75px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.audio-player .play-pause-btn {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  background: transparent url("../assets/play-btn.svg") no-repeat center center;
+  background-size: 100%;
+  border: none;
+}
+
+.volume-slider {
+  margin: 10px 2.5%;
+  width: 58%;
+  position: relative;
+  -webkit-appearance: none;
+  outline: none;
+  padding: 0;
+  height: 7px;
+  outline: none;
+  background-color: #808080;
+  border-radius: 10px;
+}
+
+.volume-slider::-ms-fill-upper {
+  background: rgba(0, 125, 181, 0.6);
+}
+
+.volume-slider::before {
+  width: var(--volume-before-width);
+}
+
+.audio-duration {
+  font-size: 13px;
+  color: white;
+}
+
+.audio-speed {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  text-align: center;
+  color: white;
+  appearance: none;
+}
+.audio-speed > * {
+  color: white;
+  border-radius: initial;
+  background-color: black;
+}
+
+.audio-sound {
+  width: 20px;
+  height: 20px;
+  background: transparent url("../assets/audio-speaker-on.png") no-repeat center center;
+  background-size: 100%;
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=style.css.map */
