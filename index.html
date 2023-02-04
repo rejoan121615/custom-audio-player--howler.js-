@@ -8,8 +8,22 @@
         <link rel="stylesheet" href="css/style.css" />
     </head>
     <body>
+        <div class="audio-player">
+            <button class="play-btn" id="playBtn" ></button>
+            <button class="pause-btn" id="pauseBtn" ></button>
+            <!-- <input type="text"> -->
+            <input min="0" value="0" type="range" class="duration-slider" />
+            <p class="audio-duration">00:00</p>
+            <select class="audio-speed">
+                <option value="0.5">0.5x</option>
+                <option value="1" selected>1x</option>
+                <option value="1.5">1.5x</option>
+            </select>
+            <button class="audio-sound"></button>
+        </div>
+
         <div class="player">
-            <div class="track" id="track">
+            <div class="track up" id="track">
                 <div class="title" id="title"></div>
                 <div class="subtitle" id="subtitle"></div>
                 <div class="timeline">
@@ -31,16 +45,14 @@
                 </div>
                 <div class="controlsOuter">
                     <div class="controlsInner">
-                        <div class="btn fas fa-play play" id="playBtn"></div>
-                        <div class="btn fas fa-pause pause" id="pauseBtn"></div>
+                        <!-- <div class="btn fas fa-play play" id="playBtn"></div> -->
+                        <!-- <div class="btn fas fa-pause pause" id="pauseBtn"></div> -->
                     </div>
                 </div>
             </div>
         </div>
 
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.2/howler.min.js"
-        ></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.2/howler.min.js"></script>
         <script src="./js/script.js"></script>
     </body>
 </html>

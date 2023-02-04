@@ -62,7 +62,7 @@ Player.prototype = {
                     );
                     thumb.classList.add("spin");
                     c_thumb.classList.add("shadow");
-                    track.classList.add("up");
+                    // track.classList.add("up");
                     // Start upating the progress of the track.
                     requestAnimationFrame(self.step.bind(self));
                 },
@@ -82,13 +82,13 @@ Player.prototype = {
             pauseBtn.style.display = "block";
             thumb.classList.add("spin");
             c_thumb.classList.add("shadow");
-            track.classList.add("up");
+            // track.classList.add("up");
         } else {
             playBtn.style.display = "none";
             pauseBtn.style.display = "block";
             thumb.classList.remove("spin");
             c_thumb.classList.remove("shadow");
-            track.classList.remove("up");
+            // track.classList.remove("up");
         }
 
         // Keep track of the index we are currently playing.
@@ -112,7 +112,7 @@ Player.prototype = {
         pauseBtn.style.display = "none";
         thumb.classList.remove("spin");
         c_thumb.classList.remove("shadow");
-        track.classList.remove("up");
+        // track.classList.remove("up");
     },
 
     /**
