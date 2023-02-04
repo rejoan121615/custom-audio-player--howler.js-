@@ -6,7 +6,7 @@
 }
 
 body {
-  background: #F4DEE4;
+  background: #f4dee4;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -83,9 +83,16 @@ body {
 .audio-sound {
   width: 20px;
   height: 20px;
-  background: transparent url("../assets/audio-speaker-on.png") no-repeat center center;
+  background: transparent url("../assets/volume-up.png") no-repeat center center;
   background-size: 100%;
   cursor: pointer;
+}
+
+.audio-sound.up {
+  background-image: url("../assets/volume-up.png");
+}
+.audio-sound.down {
+  background-image: url("../assets/volume-down.png");
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -139,7 +139,6 @@ pauseBtn.addEventListener("click", function () {
 
 // -----------------------------------------------------------------------------------------------------
 
-
 var timer = 0;
 
 var timerFunction;
@@ -148,10 +147,9 @@ var audio1 = new Howl({
     src: "../assets/audio.mp3",
 });
 
-
 audio1.once("load", function () {
-  // update the progress bar 
-  const progress1 = document.querySelector("#progress1");
+    // update the progress bar
+    const progress1 = document.querySelector("#progress1");
     // play
     const play1 = document.querySelector("#playBtn1");
     const pauseBtn1 = document.querySelector("#pauseBtn1");
@@ -163,7 +161,7 @@ audio1.once("load", function () {
         // start timer function
         timerFunction = setInterval(() => {
             // update timer
-            
+
             progress1.setAttribute("value", timer);
             timer++;
         }, 1000);
@@ -189,14 +187,28 @@ audio1.once("load", function () {
         // console.log(audio1.duration())
     });
 
-    // change speed of audio 
+    // change speed of audio
     const speed = document.querySelector("#speed1");
-    speed.addEventListener('change', (e) => {
-      audio1.rate(e.target.value)
-    })
+    speed.addEventListener("change", (e) => {
+        audio1.rate(e.target.value);
+    });
 
+    // mute and unmute function
+    const sound = document.querySelector("#sound1");
+    sound.addEventListener("click", () => {
+        // console.log(audio1._muted);
+        // audio1.mute(true);
+        // audio1._muted ? audio1.mute(false) : audio1.mute(true);
+        if (audio1._muted) {
+            audio1.mute(false);
+            sound.classList.remove("down");
+            sound.classList.add("up");
+        } else {
+            audio1.mute(true);
+            sound.classList.add("down");
+            sound.classList.remove("up");
+        }
+    });
 
-
-
-console.log(audio1);
+    console.log(audio1);
 });
