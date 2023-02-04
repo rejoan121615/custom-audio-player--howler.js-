@@ -24,7 +24,7 @@ body {
     background-color: black;
     border-radius: 8px;
     height: 75px;
-    padding: 10px;
+    padding: 10px 15px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -82,12 +82,35 @@ body {
     text-align: center;
     color: white;
     appearance: none;
+    padding: 0;
+    margin: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
     & > * {
         color: white;
         border-radius: initial;
         background-color: black;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        padding: 5px 3px;
     }
 }
+
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background: white;
+  cursor: ew-resize;
+  box-shadow: 0 0 2px 0 #555;
+  transition: background .3s ease-in-out;
+}
+
 
 %audio-sound {
     width: 20px;
@@ -96,6 +119,7 @@ body {
         center;
     background-size: 100%;
     cursor: pointer;
+    border: none;
 }
 
 .audio-sound {
