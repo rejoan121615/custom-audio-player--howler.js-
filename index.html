@@ -13,13 +13,27 @@
             <button class="pause-btn" id="pauseBtn" ></button>
             <!-- <input type="text"> -->
             <input min="0" value="0" max="100" type="range" class="duration-slider" id="progress" />
-            <p class="audio-duration" id="duration">00:00</p>
+            <p class="audio-duration" id="duration">0:00</p>
             <select class="audio-speed">
                 <option value="0.5">0.5x</option>
                 <option value="1" selected>1x</option>
                 <option value="1.5">1.5x</option>
             </select>
             <button class="audio-sound"></button>
+        </div>
+
+        <div class="audio-player">
+            <button class="play-btn" id="playBtn1" ></button>
+            <button class="pause-btn" id="pauseBtn1" ></button>
+            <!-- <input type="text"> -->
+            <input min="0" value="0" max="100" type="range" class="duration-slider" id="progress1" />
+            <p class="audio-duration" id="duration1">0:00</p>
+            <select class="audio-speed" id="speed1">
+                <option value="0.5">0.5x</option>
+                <option value="1" selected>1x</option>
+                <option value="1.5">1.5x</option>
+            </select>
+            <button class="audio-sound" id="sound1"></button>
         </div>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.2/howler.min.js"></script>

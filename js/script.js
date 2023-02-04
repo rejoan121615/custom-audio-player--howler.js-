@@ -1,14 +1,3 @@
-/*!
- *  Howler.js Audio Player Demo
- *  howlerjs.com
- *
- *  (c) 2013-2019, James Simpson of GoldFire Studios
- *  goldfirestudios.com
- *
- *  MIT License
- */
-
-// Cache references to DOM elements.
 var elms = [
     "track",
     "title",
@@ -146,3 +135,41 @@ playBtn.addEventListener("click", function () {
 pauseBtn.addEventListener("click", function () {
     player.pause();
 });
+
+
+// ------------------------------------------------------------ 
+
+
+var audio1 = new Howl({
+  src: "https://res.cloudinary.com/n3pu/video/upload/v1571849541/80s_vibe.mp3"
+})
+
+// play 
+const play1 = document.querySelector("#playBtn1");
+const pauseBtn1 = document.querySelector("#pauseBtn1");
+
+
+play1.addEventListener('click', () => {
+  audio1.play();
+  play1.style.display = 'none';
+  pauseBtn1.style.display = 'block';
+})
+
+
+
+
+
+// pause 
+const pause1 = document.querySelector("#pauseBtn1");
+
+pauseBtn1.addEventListener("click", () => {
+    audio1.pause();
+    pauseBtn1.style.display = "none";
+    play1.style.display = "block";
+});
+
+
+
+
+
+
