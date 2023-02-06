@@ -14,6 +14,7 @@ audio1.once("load", function () {
         return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
     }
     const durationElement = document.querySelector("#duration");
+    const currentTime = document.querySelector("#current-time");
     durationElement.innerHTML = formatTime(Math.round(audio1.duration()));
     // update the progress bar
     const progress = document.querySelector("#progress");
@@ -21,9 +22,13 @@ audio1.once("load", function () {
     progress.style.setProperty("--max", audio1._duration);
     progress.style.setProperty("--min", 0);
     progress.style.setProperty("--value", 0);
-    progress.addEventListener("input", (e) =>
-        progress.style.setProperty("--value", e.target.value)
-    );
+    progress.disabled = true;
+    // progress.addEventListener("input", (e) =>
+    //     progress.style.setProperty("--value", e.target.value)
+    // );
+
+    // timer
+
     // play
     const play1 = document.querySelector("#playBtn");
     const pauseBtn = document.querySelector("#pauseBtn");
@@ -32,39 +37,48 @@ audio1.once("load", function () {
         audio1.play();
         play1.style.display = "none";
         pauseBtn.style.display = "block";
+        progress.disabled = false;
         // start timer function
         timerFunction = setInterval(() => {
             // update timer
-            console.log(timer);
-
+            console.log(" timer on interval", timer);
             progress.setAttribute("value", timer);
-            // progress.setProperty("--value", timer);
+            progress.style.setProperty("--value", timer);
+            // update current time
+            currentTime.innerHTML = formatTime(timer);
             timer++;
         }, 1000);
     });
 
     // pause
-    const pause1 = document.querySelector("#pauseBtn");
-
     pauseBtn.addEventListener("click", () => {
         audio1.pause();
         pauseBtn.style.display = "none";
         play1.style.display = "block";
+        progress.disabled = true;
         // clear interval
         clearInterval(timerFunction);
     });
 
     // change progress bar on interaction
 
+    progress.addEventListener("input", (e) => {
+        progress.style.setProperty("--value", e.target.value);
+    });
+
     progress.addEventListener("change", (e) => {
+        audio1.pause();
         clearInterval(timerFunction);
-        timer = e.target.value;
-        progress.setAttribute("value", e.target.value);
         audio1.seek(e.target.value);
-        // start new timer
+        audio1.play();
+        timer = e.target.value;
+        // update progress
         timerFunction = setInterval(() => {
-            // progress.setAttribute("value", timer);
+            // update timer
             progress.value = timer;
+            progress.style.setProperty("--value", timer);
+            // update current time
+            currentTime.innerHTML = formatTime(Math.round(audio1.seek()));
             timer++;
         }, 1000);
     });
@@ -101,9 +115,15 @@ audio1.once("load", function () {
         clearInterval(timerFunction);
         pauseBtn.style.display = "none";
         play1.style.display = "block";
+        progress.style.setProperty("--value", 0);
+        progress.value = timer;
+        progress.disabled = "true";
     });
 
-    // update current timer
-    const currentTImer = document.querySelector("#current-time");
-    currentTImer.innerHTML = formatTime(audio1.seek());
+    audio1.on("seek", () => {
+        currentTime.innerHTML = formatTime(Math.round(audio1.seek()));
+        progress.style.setProperty("--value", Math.round(audio1.seek()));
+    });
 });
+
+console.log(audio1);
