@@ -26,7 +26,7 @@ input[type=range].styled-slider::-webkit-slider-thumb {
 
 input[type=range].styled-slider::-webkit-slider-runnable-track {
   height: 7px;
-  border: 1px solid #b2b2b2;
+  border: 1px solid transparent;
   border-radius: 0.5em;
   background: #808080;
   box-shadow: none;
@@ -56,7 +56,7 @@ input[type=range].styled-slider::-moz-range-thumb {
 
 input[type=range].styled-slider::-moz-range-track {
   height: max(calc(7px - 1px - 1px),0px);
-  border: 1px solid #b2b2b2;
+  border: 1px solid transparent;
   border-radius: 0.5em;
   background: #808080;
   box-shadow: none;
