@@ -61,9 +61,11 @@ audio1.once("load", function () {
     });
 
     // change progress bar on interaction
+    var changing = false;
 
     progress.addEventListener("input", (e) => {
         progress.style.setProperty("--value", e.target.value);
+        changing = true;
     });
 
     progress.addEventListener("change", (e) => {
@@ -75,8 +77,10 @@ audio1.once("load", function () {
         // update progress
         timerFunction = setInterval(() => {
             // update timer
-            progress.value = timer;
-            progress.style.setProperty("--value", timer);
+            if (!changing) {
+                progress.value = timer;
+                progress.style.setProperty("--value", timer);
+            }
             // update current time
             currentTime.innerHTML = formatTime(Math.round(audio1.seek()));
             timer++;
@@ -121,6 +125,7 @@ audio1.once("load", function () {
     });
 
     audio1.on("seek", () => {
+        changing = false;
         currentTime.innerHTML = formatTime(Math.round(audio1.seek()));
         progress.style.setProperty("--value", Math.round(audio1.seek()));
     });
