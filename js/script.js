@@ -18,6 +18,9 @@ audio1.once("load", function () {
     // update the progress bar
     const progress1 = document.querySelector("#progress1");
     progress1.setAttribute("max", audio1._duration);
+    progress1.style.setProperty("--max", audio1._duration);
+    progress1.style.setProperty("--min", 0);
+    progress1.addEventListener("input", (e) => progress1.style.setProperty("--value", e.target.value));
     // play
     const play1 = document.querySelector("#playBtn1");
     const pauseBtn1 = document.querySelector("#pauseBtn1");
@@ -32,6 +35,7 @@ audio1.once("load", function () {
             console.log(timer);
 
             progress1.setAttribute("value", timer);
+            // progress1.setProperty("--value", timer);
             timer++;
             console.log(audio1.seek() > timer);
             // if (Math.round(audio1.seek()) <= timer) {
@@ -83,7 +87,6 @@ audio1.once("load", function () {
             return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
         }
         // self.formatTime(Math.round(sound.duration()));
-        console.log(formatTime(Math.round(audio1.duration())));
         if (audio1._muted) {
             audio1.mute(false);
             sound.classList.remove("down");

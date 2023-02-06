@@ -67,12 +67,12 @@ input[type=range].styled-slider.slider-progress:active::-webkit-slider-runnable-
 
 /*mozilla*/
 input[type=range].styled-slider::-moz-range-thumb {
-  width: 2em;
-  height: 2em;
-  border-radius: 1em;
-  background: #007CF8;
-  border: none;
-  box-shadow: 0 0 2px #C41717;
+  /* width: 2em; */
+  /* height: 2em; */
+  /* border-radius: 1em; */
+  /* background: #007CF8; */
+  /* border: none; */
+  /* box-shadow: 0 0 2px #C41717; */
 }
 
 input[type=range].styled-slider::-moz-range-track {
