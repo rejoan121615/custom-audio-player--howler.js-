@@ -20,6 +20,7 @@ audio1.once("load", function () {
     progress1.setAttribute("max", audio1._duration);
     progress1.style.setProperty("--max", audio1._duration);
     progress1.style.setProperty("--min", 0);
+    progress1.style.setProperty("--value", 0);
     progress1.addEventListener("input", (e) => progress1.style.setProperty("--value", e.target.value));
     // play
     const play1 = document.querySelector("#playBtn1");
