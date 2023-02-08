@@ -1,0 +1,141 @@
+{% assign section_id = block.id %}
+{% assign audio_id = block.id | remove: "-" %}
+
+<section class="custom-podcast-section" style="background-color: {{ block.bg-color }}" id="{{ section_id }}" data-src="{{ block.audio | link }}">
+  <div class="custom-container">
+    <div class="custom-podcast__content-wrap">
+      <div class="custom-podcast__left-column">
+          {% if block.title != blank %}
+          <h2 class="custom-podcast__title custom-podcast__title-mobile" style="color: {{ block.text-color }}">
+            {{ block.title }}
+          </h2>
+          {% endif %}
+        <img src="{{ block.image | image }}" alt="{{ block.title }}" class="custom-podcast__image">
+      </div>
+      <div class="custom-podcast__right-column">
+        <div class="custom-podcast__text-wrap">
+
+          {% if block.title != blank %}
+          <h2 class="custom-podcast__title custom-podcast__title-desktop" style="color: {{ block.text-color }} !important;">
+            {{ block.title }}
+          </h2>
+          {% endif %}
+
+          {% if block.subtitle_1 != blank %}
+          <div class="custom-podcast__subtitle custom-podcast__subtitle--small" style="color: {{ block.text-color }};">
+            {{ block.subtitle_1 }}
+          </div>
+          {% endif %}
+
+          {% if block.subtitle_2 != blank %}
+          <div class="custom-podcast__subtitle" style="color: {{ block.text-color }} !important;">
+            {{ block.subtitle_2 }}
+          </div>
+          {% endif %}
+
+          {% if block.text != blank %}
+          <div class="custom-podcast__text" style="color: {{ block.text-color }} !important;">
+            {{ block.text }}
+          </div>
+          {% endif %}
+
+          {% if block.btn-text != blank %}
+          <div class="custom-podcast__btn" style="color: {{ block.btn-text-color }}; background-color: {{ block.btn-bg-color }}">{{ block.btn-text }}</div>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="custom-podcast__popup" style="background-color: {{ block.bg-color-popup }}">
+    
+    <div class="custom-container">
+      <img class="custom-podcast__popup-close" src="https://s3.amazonaws.com/unode1/assets/7900/ko2ObY0zTNeFNc0El3dB_close-icon.svg">
+      <div class="custom-podcast__popup-text-wrap">
+        {% if block.subtitle_1 != blank %}
+        <div class="custom-podcast__popup-episode" style="color: {{ block.text-color-popup }}">
+          {{ block.subtitle_1 }}
+        </div>
+        {% endif %}
+
+        {% if block.subtitle_2 != blank %}
+          <div class="custom-podcast__popup-title" style="color: {{ block.text-color-popup }}">
+            {{ block.subtitle_2 }}
+          </div>
+        {% endif %}
+
+        {% if block.text != blank %}
+        <div class="custom-podcast__popup-text" style="color: {{ block.text-color-popup }}">
+          {{ block.text }}
+        </div>
+        {% endif %}
+
+        <div class="audio-player">
+            <button class="play-btn" id="playBtn" ></button>
+            <button class="pause-btn" id="pauseBtn" ></button>
+
+            <input min="0" max="0" type="range" class="duration-slider styled-slider slider-progress" id="progress" />
+            <div class="audio-duration">
+              <span class="audio-duration-elapsed" id="current-time">0:00</span> / <span class="audio-duration-second" id="duration">0:00</span>
+            </div>
+
+            <select class="audio-speed" id="speed1">
+                <option value="0.5">0.5x</option>
+                <option value="1" selected>1x</option>
+                <option value="1.5">1.5x</option>
+            </select>
+            <button class="audio-sound up" id="sound1"></button>
+        </div>
+
+        
+        <div class="custom-podcast__popup-image-wrap">
+          <img src="{{ block.image | image }}" alt="{{ block.title }}" class="custom-podcast__popup-image">
+        </div>
+        
+        <div class="custom-podcast__popup-card-list">
+          {% for card in block.inner_blocks %}
+
+          <div class="custom-podcast__popup-card-wrap">
+            <div class="custom-podcast__popup-card-title" style="color: {{ block.text-color-popup }}">
+              {{ card.title }}
+            </div>
+            <div class="custom-podcast__popup-card-text" style="color: {{ block.text-color-popup }}">
+              {{ card.text }}
+            </div>
+          </div>
+
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+<script>
+
+  (function() {
+    let btnPopupPodcast = document.querySelector('#{{section_id}} .custom-podcast__btn')
+    let closePopupPodcast = document.querySelector('#{{section_id}} .custom-podcast__popup-close')
+    let popup = document.querySelector('#{{section_id}} .custom-podcast__popup')
+
+
+    if(btnPopupPodcast) {
+      btnPopupPodcast.addEventListener('click', function(e) {
+        popup.classList.add('open')
+      })
+    }
+
+    if(closePopupPodcast) {
+      closePopupPodcast.addEventListener('click', function(e) {
+        popup.classList.remove('open')
+      })
+    }
+  })()
+
+</script>
+
+
