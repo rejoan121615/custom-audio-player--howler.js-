@@ -10,10 +10,9 @@
         <!-- <script src="./js/range-input.js" defer></script> -->
     </head>
     <body>
-        <div class="audio-player">
+        <!-- <div class="audio-player">
             <button class="play-btn" id="playBtn"></button>
             <button class="pause-btn" id="pauseBtn"></button>
-            <!-- <input type="text"> -->
             <input
                 min="0"
                 max="0"
@@ -26,6 +25,32 @@
                     >0:00</span
                 >
             </div>
+            <select class="audio-speed" id="speed1">
+                <option value="0.5">0.5x</option>
+                <option value="1" selected>1x</option>
+                <option value="1.5">1.5x</option>
+            </select>
+            <button class="audio-sound up" id="sound1"></button>
+        </div> -->
+
+        <div class="audio-player">
+            <button class="play-btn" id="playBtn"></button>
+            <button class="pause-btn" id="pauseBtn"></button>
+
+            <input
+                min="0"
+                max="0"
+                type="range"
+                class="duration-slider styled-slider slider-progress"
+                id="progress"
+            />
+            <div class="audio-duration">
+                <span class="audio-duration-elapsed" id="current-time"
+                    >0:00</span
+                >
+                / <span class="audio-duration-second" id="duration">0:00</span>
+            </div>
+
             <select class="audio-speed" id="speed1">
                 <option value="0.5">0.5x</option>
                 <option value="1" selected>1x</option>
