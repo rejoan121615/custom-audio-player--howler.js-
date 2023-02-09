@@ -221,7 +221,7 @@ const audioDuration = document.querySelector(".audio-duration");
 const elapsedTime = document.querySelector("#current-time");
 const duration = document.querySelector("#duration");
 const audioSpeed = document.querySelector("#speed");
-const sound = document.querySelector("#speed");
+const sound = document.querySelector("#sound");
 
 // Cache references to DOM elements.
 // var elms = ['track', 'title', 'subtitle', 'timer', 'duration', 'playBtn', 'pauseBtn', 'progress', 'thumb', 'c-thumb'];
@@ -260,6 +260,8 @@ Player.prototype = {
                 ],
                 html5: true, // Force to HTML5 so that the audio can stream in (best for large files).
                 onplay: function () {
+                    console.log(self.playlist[0].howl);
+
                     // Display the duration.
                     duration.innerHTML = self.formatTime(
                         Math.round(sound.duration())
@@ -275,9 +277,6 @@ Player.prototype = {
                     progressBar.style.setProperty("--min", 0);
                     progressBar.style.setProperty("--value", 0);
                     // progressBar.setAttribute("value", sound.duration());
-
-                    console.log(self);
-                    console.log(sound.duration());
 
                     requestAnimationFrame(self.step.bind(self));
                 },
@@ -343,21 +342,30 @@ Player.prototype = {
         var seek = sound.seek() || 0;
         // timer.innerHTML = self.formatTime(Math.round(seek));
         // progress.style.width = (((seek / sound.duration()) * 100) || 0) + '%';
-        // set progress bar value 
+        // set progress bar value
         progressBar.style.setProperty(
             "--value",
             (seek / sound.duration()) * 100 || 0
         );
-        progressBar.setAttribute(
-            "value",
-            (seek / sound.duration()) * 100 || 0
-        );
+        progressBar.setAttribute("value", (seek / sound.duration()) * 100 || 0);
         elapsedTime.innerHTML = self.formatTime(Math.round(seek));
 
         // If the sound is still playing, continue stepping.
         if (sound.playing()) {
             requestAnimationFrame(self.step.bind(self));
         }
+    },
+
+    // volume control btn
+    volume: function () {
+        var self = this;
+
+        var sound = self.playlist[self.index].howl;
+
+        // determine our current sound volume
+
+        // sound.mute(true);
+        sound.mute(!sound.mute())
     },
 
     /**
@@ -389,4 +397,7 @@ playBtn.addEventListener("click", function () {
 });
 pauseBtn.addEventListener("click", function () {
     player.pause();
+});
+sound.addEventListener("click", () => {
+    player.volume();
 });
