@@ -345,9 +345,9 @@ Player.prototype = {
         // set progress bar value
         progressBar.style.setProperty(
             "--value",
-            (seek / sound.duration()) * 100 || 0
+            Math.round(seek || 0)
         );
-        progressBar.setAttribute("value", (seek / sound.duration()) * 100 || 0);
+        progressBar.setAttribute("value", Math.round(seek || 0));
         elapsedTime.innerHTML = self.formatTime(Math.round(seek));
 
         // If the sound is still playing, continue stepping.
@@ -372,6 +372,12 @@ Player.prototype = {
         var sound = self.playlist[self.index].howl;
 
         sound.rate(data);
+    },
+    progressScroller: function (scrollData) {
+        var self = this;
+        var sound = self.playlist[self.index].howl;
+        sound.seek(scrollData);
+        requestAnimationFrame(self.step.bind(self));
     },
 
     /**
@@ -412,3 +418,7 @@ audioSpeed.addEventListener("change", (e) => {
     // console.log(e.target.value);
     player.playbackSpeed(e.target.value);
 });
+// progress bar event 
+progressBar.addEventListener('change', (e) => {
+    player.progressScroller(e.target.value);
+})
