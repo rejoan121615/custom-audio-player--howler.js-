@@ -207,6 +207,16 @@
 //     "c-thumb",
 // ];
 var wrapperID = document.querySelector(".audio-player");
+const playBtn = document.querySelector("#playBtn");
+const pauseBtn = document.querySelector("#pauseBtn");
+const progressBar = document.querySelector("#progress");
+const audioDuration = document.querySelector(".audio-duration");
+const elapsedTime = document.querySelector("#current-time");
+const duration = document.querySelector("#duration");
+const audioSpeed = document.querySelector("#speed");
+const sound = document.querySelector("#speed");
+
+
 
 elms.forEach(function (elm) {
     window[elm] = document.getElementById(elm);
