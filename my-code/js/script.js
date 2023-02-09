@@ -357,7 +357,7 @@ Player.prototype = {
     },
 
     // volume control btn
-    volume: function () {
+    volume: function (volData) {
         var self = this;
 
         var sound = self.playlist[self.index].howl;
@@ -365,7 +365,13 @@ Player.prototype = {
         // determine our current sound volume
 
         // sound.mute(true);
-        sound.mute(!sound.mute())
+        sound.mute(!sound.mute());
+    },
+    playbackSpeed: function (data) {
+        var self = this;
+        var sound = self.playlist[self.index].howl;
+
+        sound.rate(data);
     },
 
     /**
@@ -400,4 +406,9 @@ pauseBtn.addEventListener("click", function () {
 });
 sound.addEventListener("click", () => {
     player.volume();
+});
+audioSpeed.addEventListener("change", (e) => {
+    // audio.rate(e.target.value);
+    // console.log(e.target.value);
+    player.playbackSpeed(e.target.value);
 });
