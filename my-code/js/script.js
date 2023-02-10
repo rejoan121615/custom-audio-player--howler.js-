@@ -135,8 +135,7 @@ function Player(data) {
 
 // Setup our new audio player class and pass it the playlist.
 var player = new Player({
-    file: "https://res.cloudinary.com/n3pu/video/upload/v1571849541/80s_vibe.mp3",
-    howl: null,
+    file: "https://s3.amazonaws.com/unode1/assets/7900/E5MUGJhTDyCYa5addUFy_SSPOD_MSREEMAH_091222_Full_v1.1%20(1).mp3",
 });
 
 // Bind our player controls.
