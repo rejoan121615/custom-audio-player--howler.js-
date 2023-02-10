@@ -232,7 +232,7 @@ const sound = document.querySelector("#sound");
 var Player = function (playlist) {
     this.playlist = playlist;
     this.index = 0;
-
+    this.progressChange = false;
     // Display the title of the first track.
     //   title.innerHTML = playlist[0].title;
     //   subtitle.innerHTML = playlist[0].subtitle;
@@ -285,7 +285,8 @@ Player.prototype = {
 
         // Begin playing the sound.
         sound.play();
-
+        // sound object
+        console.log(sound);
         // Update the track display.
         // title.innerHTML = data.title;
         // subtitle.innerHTML = data.subtitle;
@@ -337,15 +338,14 @@ Player.prototype = {
 
         // Get the Howl we want to manipulate.
         var sound = self.playlist[self.index].howl;
-
         // Determine our current seek position.
         var seek = sound.seek() || 0;
         // timer.innerHTML = self.formatTime(Math.round(seek));
         // progress.style.width = (((seek / sound.duration()) * 100) || 0) + '%';
         // set progress bar value
         progressBar.style.setProperty("--value", Math.round(seek || 0));
-        progressBar.setAttribute("value", Math.round(seek));
-        // progressBar.value =  Math.round(seek);
+        progressBar.value = Math.round(Number(seek || 0));
+
         elapsedTime.innerHTML = self.formatTime(Math.round(seek));
 
         // If the sound is still playing, continue stepping.
@@ -374,10 +374,43 @@ Player.prototype = {
     progressScroller: function (scrollData) {
         var self = this;
         var sound = self.playlist[self.index].howl;
+        // if sound not playing then play it
+        if (!sound.playing()) {
+            sound.play();
+        }
         sound.seek(scrollData);
         requestAnimationFrame(self.step.bind(self));
     },
+    progressHandler: function (indicator, dataValue) {
+        var self = this;
 
+        // Get the Howl we want to manipulate.
+        var sound = self.playlist[self.index].howl;
+        // progress start stop condition
+        if (indicator === "start") {
+            // pause the sound
+            sound.pause();
+            // change range value based user input
+            progressBar.style.setProperty(
+                "--value",
+                Math.round(Number(dataValue))
+            );
+            progressBar.value = Math.round(Number(dataValue));
+        } else if (indicator === "stop") {
+            // apply the user change value 
+            sound.seek(Math.round(Number(dataValue)));
+            // play the sound after change the progress
+            sound.play();
+
+        }
+
+        // progress change or not logic
+        // if (this.progressChange) {
+        //     console.log('dont update code')
+        // } else {
+        //     console.log('please update code now');
+        // }
+    },
     /**
      * Format the time from seconds to M:SS.
      * @param  {Number} secs Seconds to format.
@@ -388,10 +421,6 @@ Player.prototype = {
         var seconds = secs - minutes * 60 || 0;
 
         return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-    },
-    currentProgress: function () {
-        var self = this;
-        var sound = self.playlist[self.index].howl;
     },
 };
 
@@ -420,8 +449,12 @@ audioSpeed.addEventListener("change", (e) => {
 });
 // progress bar event
 progressBar.addEventListener("change", (e) => {
-    player.progressScroller(e.target.value);
-    // progressBar.style.setProperty("--value", e.target.value);
-    // console.log(e.target.value)
-    // progressBar.value = Number(e.target.value);
+    // console.log("change");
+    // player.progressScroller(e.target.value);
+    // player.progressActiveControl();
+    player.progressHandler("stop", e.target.value);
+});
+
+progressBar.addEventListener("input", (e) => {
+    player.progressHandler("start", e.target.value);
 });
