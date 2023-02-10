@@ -332,7 +332,7 @@ Player.prototype = {
     /**
      * The step called within requestAnimationFrame to update the playback position.
      */
-    step: function () {
+    step: function (e) {
         var self = this;
 
         // Get the Howl we want to manipulate.
@@ -343,11 +343,9 @@ Player.prototype = {
         // timer.innerHTML = self.formatTime(Math.round(seek));
         // progress.style.width = (((seek / sound.duration()) * 100) || 0) + '%';
         // set progress bar value
-        progressBar.style.setProperty(
-            "--value",
-            Math.round(seek || 0)
-        );
-        progressBar.setAttribute("value", Math.round(seek || 0));
+        progressBar.style.setProperty("--value", Math.round(seek || 0));
+        progressBar.setAttribute("value", Math.round(seek));
+        // progressBar.value =  Math.round(seek);
         elapsedTime.innerHTML = self.formatTime(Math.round(seek));
 
         // If the sound is still playing, continue stepping.
@@ -391,6 +389,10 @@ Player.prototype = {
 
         return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
     },
+    currentProgress: function () {
+        var self = this;
+        var sound = self.playlist[self.index].howl;
+    },
 };
 
 // Setup our new audio player class and pass it the playlist.
@@ -414,11 +416,12 @@ sound.addEventListener("click", () => {
     player.volume();
 });
 audioSpeed.addEventListener("change", (e) => {
-    // audio.rate(e.target.value);
-    // console.log(e.target.value);
     player.playbackSpeed(e.target.value);
 });
-// progress bar event 
-progressBar.addEventListener('change', (e) => {
+// progress bar event
+progressBar.addEventListener("change", (e) => {
     player.progressScroller(e.target.value);
-})
+    // progressBar.style.setProperty("--value", e.target.value);
+    // console.log(e.target.value)
+    // progressBar.value = Number(e.target.value);
+});
