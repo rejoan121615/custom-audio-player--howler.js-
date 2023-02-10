@@ -229,213 +229,278 @@ const sound = document.querySelector("#sound");
 //   window[elm] = document.getElementById(elm);
 // });
 
-var Player = function (playlist) {
-    this.playlist = playlist;
-    this.index = 0;
-    this.progressChange = false;
-    // Display the title of the first track.
-    //   title.innerHTML = playlist[0].title;
-    //   subtitle.innerHTML = playlist[0].subtitle;
-};
-Player.prototype = {
-    /**
-     * Play a song in the playlist.
-     * @param  {Number} index Index of the song in the playlist (leave empty to play the first or current).
-     */
-    play: function (index) {
-        var self = this;
-        var sound;
+function Player(data) {
+    // this.playlist = playlist;
+    // this.index = 0;
+    // console.log(playlist);
+    this.howl = new Howl({
+        src: data.file,
+        html5: true,
+        onload: () => {
+            const sound = this.howl;
+            // format progress bar
+            progressBar.style.setProperty(
+                "--max",
+                this.format(sound.duration())
+            );
+            progressBar.setAttribute("max", this.format(sound.duration()));
+            progressBar.style.setProperty("--min", 0);
+            progressBar.style.setProperty("--value", 0);
+            // Display total duration.
+            duration.innerHTML = this.formatTime(this.format(sound.duration()));
+        },
+        onplay: () => {
+            requestAnimationFrame(this.step.bind(this));
+        },
+    });
 
-        index = typeof index === "number" ? index : self.index;
-        var data = self.playlist[index];
+    // convert string into number and formate as round value like: 25, 54, 99
+    this.format = function (a) {
+        return Math.round(Number(a));
+    };
 
-        // If we already loaded this track, use the current one.
-        // Otherwise, setup and load a new Howl.
-        if (data.howl) {
-            sound = data.howl;
-        } else {
-            sound = data.howl = new Howl({
-                src: [
-                    "https://res.cloudinary.com/n3pu/video/upload/v1571849541/80s_vibe.mp3",
-                ],
-                html5: true, // Force to HTML5 so that the audio can stream in (best for large files).
-                onplay: function () {
-                    console.log(self.playlist[0].howl);
-
-                    // Display the duration.
-                    duration.innerHTML = self.formatTime(
-                        Math.round(sound.duration())
-                    );
-                    //   thumb.classList.add('spin');
-                    //   c_thumb.classList.add('shadow');
-                    //   track.classList.add('up');
-                    // Start upating the progress of the track.
-
-                    // progressBar.setAttribute("max", audio._duration);
-                    progressBar.style.setProperty("--max", sound.duration());
-                    progressBar.setAttribute("max", sound.duration());
-                    progressBar.style.setProperty("--min", 0);
-                    progressBar.style.setProperty("--value", 0);
-                    // progressBar.setAttribute("value", sound.duration());
-
-                    requestAnimationFrame(self.step.bind(self));
-                },
-            });
-        }
-
+    // play the current track
+    this.play = function () {
+        var sound = this.howl;
         // Begin playing the sound.
         sound.play();
-        // sound object
-        console.log(sound);
-        // Update the track display.
-        // title.innerHTML = data.title;
-        // subtitle.innerHTML = data.subtitle;
-
-        // Show the pause button.
+        // control play and pause button
         if (sound.state() === "loaded") {
             playBtn.style.display = "none";
             pauseBtn.style.display = "block";
-            //   thumb.classList.add('spin');
-            //   c_thumb.classList.add('shadow');
-            //   track.classList.add('up');
         } else {
             playBtn.style.display = "none";
             pauseBtn.style.display = "block";
-            //   thumb.classList.remove('spin');
-            //   c_thumb.classList.remove('shadow');
-            //   track.classList.remove('up');
         }
+    };
 
-        // Keep track of the index we are currently playing.
-        self.index = index;
-    },
-
-    /**
-     * Pause the currently playing track.
-     */
-    pause: function () {
-        var self = this;
-
-        // Get the Howl we want to manipulate.
-        var sound = self.playlist[self.index].howl;
-
+    // pause the current track
+    this.pause = function () {
+        var sound = this.howl;
         // Puase the sound.
         sound.pause();
-
-        // Show the play button.
+        // control play and pause button
         playBtn.style.display = "block";
         pauseBtn.style.display = "none";
-        // thumb.classList.remove('spin');
-        // c_thumb.classList.remove('shadow');
-        // track.classList.remove('up');
-    },
+    };
 
-    /**
-     * The step called within requestAnimationFrame to update the playback position.
-     */
-    step: function (e) {
-        var self = this;
-
-        // Get the Howl we want to manipulate.
-        var sound = self.playlist[self.index].howl;
+    // control play state (duration, progress bar )
+    this.step = function (e) {
+        var sound = this.howl;
         // Determine our current seek position.
         var seek = sound.seek() || 0;
-        // timer.innerHTML = self.formatTime(Math.round(seek));
+        // timer.innerHTML = this.formatTime(this.format(sound));
         // progress.style.width = (((seek / sound.duration()) * 100) || 0) + '%';
         // set progress bar value
-        progressBar.style.setProperty("--value", Math.round(seek || 0));
-        progressBar.value = Math.round(Number(seek || 0));
-
-        elapsedTime.innerHTML = self.formatTime(Math.round(seek));
-
+        progressBar.style.setProperty("--value", this.format(seek));
+        progressBar.value = this.format(seek);
+        // update the elapsed time 
+        elapsedTime.innerHTML = this.formatTime(this.format(seek));
         // If the sound is still playing, continue stepping.
         if (sound.playing()) {
-            requestAnimationFrame(self.step.bind(self));
+            // requestAnimationFrame(self.step.bind(self));
+            requestAnimationFrame(this.step.bind(this));
         }
-    },
+    };
 
-    // volume control btn
-    volume: function (volData) {
-        var self = this;
-
-        var sound = self.playlist[self.index].howl;
-
-        // determine our current sound volume
-
-        // sound.mute(true);
-        sound.mute(!sound.mute());
-    },
-    playbackSpeed: function (data) {
-        var self = this;
-        var sound = self.playlist[self.index].howl;
-
-        sound.rate(data);
-    },
-    progressScroller: function (scrollData) {
-        var self = this;
-        var sound = self.playlist[self.index].howl;
-        // if sound not playing then play it
-        if (!sound.playing()) {
-            sound.play();
-        }
-        sound.seek(scrollData);
-        requestAnimationFrame(self.step.bind(self));
-    },
-    progressHandler: function (indicator, dataValue) {
-        var self = this;
-
-        // Get the Howl we want to manipulate.
-        var sound = self.playlist[self.index].howl;
-        // progress start stop condition
-        if (indicator === "start") {
-            // pause the sound
-            sound.pause();
-            // change range value based user input
-            progressBar.style.setProperty(
-                "--value",
-                Math.round(Number(dataValue))
-            );
-            progressBar.value = Math.round(Number(dataValue));
-        } else if (indicator === "stop") {
-            // apply the user change value 
-            sound.seek(Math.round(Number(dataValue)));
-            // play the sound after change the progress
-            sound.play();
-
-        }
-
-        // progress change or not logic
-        // if (this.progressChange) {
-        //     console.log('dont update code')
-        // } else {
-        //     console.log('please update code now');
-        // }
-    },
-    /**
-     * Format the time from seconds to M:SS.
-     * @param  {Number} secs Seconds to format.
-     * @return {String}      Formatted time.
-     */
-    formatTime: function (secs) {
+    this.formatTime = function (secs) {
         var minutes = Math.floor(secs / 60) || 0;
         var seconds = secs - minutes * 60 || 0;
-
         return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-    },
-};
+    };
+}
+// Player.prototype = {
+
+// play: function (index) {
+//     var self = this;
+//     var sound;
+
+//     index = typeof index === "number" ? index : self.index;
+//     var data = self.playlist[index];
+
+//     // If we already loaded this track, use the current one.
+//     // Otherwise, setup and load a new Howl.
+//     if (data.howl) {
+//         sound = data.howl;
+//     } else {
+//         sound = data.howl = new Howl({
+//             src: [
+//                 "https://res.cloudinary.com/n3pu/video/upload/v1571849541/80s_vibe.mp3",
+//             ],
+//             html5: true, // Force to HTML5 so that the audio can stream in (best for large files).
+//             onplay: function () {
+//                 console.log(self.playlist[0].howl);
+
+//                 // Display the duration.
+//                 duration.innerHTML = self.formatTime(
+//                     Math.round(sound.duration())
+//                 );
+//                 //   thumb.classList.add('spin');
+//                 //   c_thumb.classList.add('shadow');
+//                 //   track.classList.add('up');
+//                 // Start upating the progress of the track.
+
+//                 // progressBar.setAttribute("max", audio._duration);
+//                 progressBar.style.setProperty("--max", sound.duration());
+//                 progressBar.setAttribute("max", sound.duration());
+//                 progressBar.style.setProperty("--min", 0);
+//                 progressBar.style.setProperty("--value", 0);
+//                 // progressBar.setAttribute("value", sound.duration());
+
+//                 requestAnimationFrame(self.step.bind(self));
+//             },
+//         });
+//     }
+
+//     // Begin playing the sound.
+//     sound.play();
+//     // sound object
+//     console.log(sound);
+//     // Update the track display.
+//     // title.innerHTML = data.title;
+//     // subtitle.innerHTML = data.subtitle;
+
+//     // Show the pause button.
+//     if (sound.state() === "loaded") {
+//         playBtn.style.display = "none";
+//         pauseBtn.style.display = "block";
+//         //   thumb.classList.add('spin');
+//         //   c_thumb.classList.add('shadow');
+//         //   track.classList.add('up');
+//     } else {
+//         playBtn.style.display = "none";
+//         pauseBtn.style.display = "block";
+//         //   thumb.classList.remove('spin');
+//         //   c_thumb.classList.remove('shadow');
+//         //   track.classList.remove('up');
+//     }
+
+//     // Keep track of the index we are currently playing.
+//     self.index = index;
+// },
+
+//     /**
+//      * Pause the currently playing track.
+//      */
+//     pause: function () {
+//         var self = this;
+
+//         // Get the Howl we want to manipulate.
+//         var sound = self.playlist[self.index].howl;
+
+//         // Puase the sound.
+//         sound.pause();
+
+// // Show the play button.
+// playBtn.style.display = "block";
+// pauseBtn.style.display = "none";
+// // thumb.classList.remove('spin');
+// // c_thumb.classList.remove('shadow');
+// // track.classList.remove('up');
+//     },
+
+//     /**
+//      * The step called within requestAnimationFrame to update the playback position.
+//      */
+//     step: function (e) {
+//         var self = this;
+
+//         // Get the Howl we want to manipulate.
+//         var sound = self.playlist[self.index].howl;
+//         // Determine our current seek position.
+//         var seek = sound.seek() || 0;
+//         // timer.innerHTML = self.formatTime(Math.round(seek));
+//         // progress.style.width = (((seek / sound.duration()) * 100) || 0) + '%';
+//         // set progress bar value
+//         progressBar.style.setProperty("--value", Math.round(seek || 0));
+//         progressBar.value = Math.round(Number(seek || 0));
+
+//         elapsedTime.innerHTML = self.formatTime(Math.round(seek));
+
+//         // If the sound is still playing, continue stepping.
+//         if (sound.playing()) {
+//             requestAnimationFrame(self.step.bind(self));
+//         }
+//     },
+
+//     // volume control btn
+//     volume: function (volData) {
+//         var self = this;
+
+//         var sound = self.playlist[self.index].howl;
+
+//         // determine our current sound volume
+
+//         // sound.mute(true);
+//         sound.mute(!sound.mute());
+//     },
+//     playbackSpeed: function (data) {
+//         var self = this;
+//         var sound = self.playlist[self.index].howl;
+
+//         sound.rate(data);
+//     },
+//     progressScroller: function (scrollData) {
+//         var self = this;
+//         var sound = self.playlist[self.index].howl;
+//         // if sound not playing then play it
+//         if (!sound.playing()) {
+//             sound.play();
+//         }
+//         sound.seek(scrollData);
+//         requestAnimationFrame(self.step.bind(self));
+//     },
+//     progressHandler: function (indicator, dataValue) {
+//         var self = this;
+
+//         // Get the Howl we want to manipulate.
+//         var sound = self.playlist[self.index].howl;
+//         // progress start stop condition
+//         if (indicator === "start") {
+//             // pause the sound
+//             sound.pause();
+//             // change range value based user input
+//             progressBar.style.setProperty(
+//                 "--value",
+//                 Math.round(Number(dataValue))
+//             );
+//             progressBar.value = Math.round(Number(dataValue));
+//         } else if (indicator === "stop") {
+//             // apply the user change value
+//             sound.seek(Math.round(Number(dataValue)));
+//             // play the sound after change the progress
+//             sound.play();
+//         }
+
+//         // progress change or not logic
+//         // if (this.progressChange) {
+//         //     console.log('dont update code')
+//         // } else {
+//         //     console.log('please update code now');
+//         // }
+//     },
+//     /**
+//      * Format the time from seconds to M:SS.
+//      * @param  {Number} secs Seconds to format.
+//      * @return {String}      Formatted time.
+//      */
+//     formatTime: function (secs) {
+//         var minutes = Math.floor(secs / 60) || 0;
+//         var seconds = secs - minutes * 60 || 0;
+
+//         return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+//     },
+// };
 
 // Setup our new audio player class and pass it the playlist.
-var player = new Player([
-    {
-        title: "Rave Digger",
-        subtitle: "80s vibe",
-        file: "rave_digger",
-        howl: null,
-    },
-]);
+var player = new Player({
+    file: "https://res.cloudinary.com/n3pu/video/upload/v1571849541/80s_vibe.mp3",
+    howl: null,
+});
 
 // Bind our player controls.
 playBtn.addEventListener("click", function () {
+    // player.play();
     player.play();
 });
 pauseBtn.addEventListener("click", function () {
@@ -449,9 +514,6 @@ audioSpeed.addEventListener("change", (e) => {
 });
 // progress bar event
 progressBar.addEventListener("change", (e) => {
-    // console.log("change");
-    // player.progressScroller(e.target.value);
-    // player.progressActiveControl();
     player.progressHandler("stop", e.target.value);
 });
 
