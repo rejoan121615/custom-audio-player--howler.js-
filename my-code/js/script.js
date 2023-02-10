@@ -28,6 +28,8 @@ function Player(data) {
             console.log(this.howl);
         },
         onplay: () => {
+            playBtn.style.display = "none";
+            pauseBtn.style.display = "block";
             requestAnimationFrame(this.step.bind(this));
         },
         onend: () => {
@@ -92,10 +94,6 @@ function Player(data) {
     };
 
     this.progressHandler = function (indicator, dataValue) {
-        console.log("indicator ", indicator);
-        console.log("data value", dataValue);
-        // Get the Howl we want to manipulate.
-        var sound = this.howl;
         // progress start stop condition
         if (indicator === "start") {
             // pause the sound
