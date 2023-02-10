@@ -14,6 +14,7 @@ function Player(data) {
     this.howl = new Howl({
         src: data.file,
         html5: true,
+        defer: true,
         onload: () => {
             // format progress bar
             progressBar.style.setProperty(
@@ -70,8 +71,6 @@ function Player(data) {
     this.step = function (e) {
         // Determine our current seek position.
         var seek = this.howl.seek() || 0;
-        // timer.innerHTML = this.formatTime(this.format(sound));
-        // progress.style.width = (((seek / sound.duration()) * 100) || 0) + '%';
         // set progress bar value
         progressBar.style.setProperty("--value", this.format(seek));
         progressBar.value = this.format(seek);
