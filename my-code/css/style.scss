@@ -99,36 +99,71 @@ body {
     }
 }
 
-
 input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  height: 15px;
-  width: 15px;
-  border-radius: 50%;
-  background: white;
-  cursor: ew-resize;
-  box-shadow: 0 0 2px 0 #555;
-  transition: background .3s ease-in-out;
+    -webkit-appearance: none;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    background: white;
+    cursor: ew-resize;
+    box-shadow: 0 0 2px 0 #555;
+    transition: background 0.3s ease-in-out;
 }
 
-
-%audio-sound {
-    width: 20px;
-    height: 20px;
-    background: transparent url("../assets/volume-up.png") no-repeat center
-        center;
-    background-size: 100%;
-    cursor: pointer;
-    border: none;
-}
+// %audio-sound {
+//     background: transparent url("../assets/volume-up.png") no-repeat center
+//         center;
+//     background-size: 100%;
+//     cursor: pointer;
+//     border: none;
+// }
 
 .audio-sound {
-    @extend %audio-sound;
-    &.up {
-        background-image: url("../assets/volume-up.png");
+    width: 20px;
+    height: 20px;
+    position: relative;
+    // display: none;
+    .icon {
+        background: transparent url("../assets/volume-up.png") no-repeat center
+            center;
+        background-size: 100%;
+        cursor: pointer;
+        border: none;
+        display: inline-block;
+        width: 20px;
+        height: 20px;
     }
-
-    &.down {
-        background-image: url("../assets/volume-down.png");
+    .sound-btn-wrap {
+        display: none;
+        transform: translateX(-10px);
+    }
+    &:hover {
+        .sound-btn-wrap {
+            transform: translateX(0px);
+            position: absolute;
+            left: 0px;
+            top: -28px;
+            width: 125px;
+            height: 75px;
+            // background-color: rgb(98, 98, 98);
+            background-color: black;
+            display: flex;
+            align-items: center;
+            column-gap: 10px;
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+            padding-right: 10px;
+            transition: all 0.5s;
+            .icon {
+                margin-top: 2px;
+            }
+            #sound-control {
+                flex: 1;
+                margin-top: -1px;
+                --max: 100;
+                --min: 0;
+                --value: 100;
+            }
+        }
     }
 }

@@ -102,17 +102,46 @@ input[type=range]::-webkit-slider-thumb {
 .audio-sound {
   width: 20px;
   height: 20px;
+  position: relative;
+}
+.audio-sound .icon {
   background: transparent url("../assets/volume-up.png") no-repeat center center;
   background-size: 100%;
   cursor: pointer;
   border: none;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
 }
-
-.audio-sound.up {
-  background-image: url("../assets/volume-up.png");
+.audio-sound .sound-btn-wrap {
+  display: none;
+  transform: translateX(-10px);
 }
-.audio-sound.down {
-  background-image: url("../assets/volume-down.png");
+.audio-sound:hover .sound-btn-wrap {
+  transform: translateX(0px);
+  position: absolute;
+  left: 0px;
+  top: -28px;
+  width: 125px;
+  height: 75px;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  padding-right: 10px;
+  transition: all 0.5s;
+}
+.audio-sound:hover .sound-btn-wrap .icon {
+  margin-top: 2px;
+}
+.audio-sound:hover .sound-btn-wrap #sound-control {
+  flex: 1;
+  margin-top: -1px;
+  --max: 100;
+  --min: 0;
+  --value: 100;
 }
 
 /*# sourceMappingURL=style.css.map */

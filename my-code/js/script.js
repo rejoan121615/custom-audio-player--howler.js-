@@ -6,7 +6,9 @@ const audioDuration = document.querySelector(".audio-duration");
 const elapsedTime = document.querySelector("#current-time");
 const duration = document.querySelector("#duration");
 const audioSpeed = document.querySelector("#speed");
+// const then sound switch
 const sound = document.querySelector("#sound");
+const soundController = document.querySelector("#sound-control");
 
 function Player(data) {
     this.howl = new Howl({
@@ -83,9 +85,22 @@ function Player(data) {
     };
 
     // volume control btn
-    this.volume = function (volData) {
-        // determine our current sound volume
-        this.howl.mute(!this.howl.mute());
+    this.volume = function (value) {
+        // control volume 
+        this.howl.volume(Number((1 / 100) * value).toFixed(2));
+        // control progress bar 
+        soundController.style.setProperty("--value", this.format(value));
+        // control sound icon
+        const iconList = sound.querySelectorAll(".icon");
+        if (value > 0) {
+            iconList.forEach((icon, index) => {
+                icon.style.backgroundImage = "url('assets/volume-up.png')";
+            });
+        } else {
+            iconList.forEach((icon, index) => {
+                icon.style.backgroundImage = "url('assets/volume-down.png')";
+            });
+        }
     };
     // control player playing speed
     this.playbackSpeed = function (data) {
@@ -93,6 +108,7 @@ function Player(data) {
         this.howl.rate(data);
     };
 
+    // control user progress control
     this.progressHandler = function (indicator, dataValue) {
         // progress start stop condition
         if (indicator === "start") {
@@ -108,6 +124,7 @@ function Player(data) {
             this.howl.play();
         }
     };
+
     // formate the sec based on munite and sec
     this.formatTime = function (secs) {
         var minutes = Math.floor(secs / 60) || 0;
@@ -130,9 +147,6 @@ playBtn.addEventListener("click", function () {
 pauseBtn.addEventListener("click", function () {
     player.pause();
 });
-sound.addEventListener("click", () => {
-    player.volume();
-});
 audioSpeed.addEventListener("change", (e) => {
     player.playbackSpeed(e.target.value);
 });
@@ -143,4 +157,10 @@ progressBar.addEventListener("change", (e) => {
 
 progressBar.addEventListener("input", (e) => {
     player.progressHandler("start", e.target.value);
+});
+
+// sound control event
+soundController.addEventListener("input", (e) => {
+    // console.log(((1 / 100) * e.target.value).toFixed(2));
+    player.volume(e.target.value);
 });

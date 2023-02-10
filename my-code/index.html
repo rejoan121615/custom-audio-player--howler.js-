@@ -56,7 +56,20 @@
                 <option value="1" selected>1x</option>
                 <option value="1.5">1.5x</option>
             </select>
-            <button class="audio-sound up" id="sound"></button>
+            <div class="audio-sound up" id="sound">
+                <div class="icon"></div>
+                <div class="sound-btn-wrap">
+                    <div class="icon"></div>
+                    <input
+                        min="0"
+                        max="100"
+                        value="100"
+                        type="range"
+                        class="duration-slider styled-slider slider-progress"
+                        id="sound-control"
+                    />
+                </div>
+            </div>
         </div>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.2/howler.min.js"></script>
