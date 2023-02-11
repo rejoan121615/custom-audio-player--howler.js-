@@ -2,6 +2,14 @@
 $color-light: #fff2f6;
 $color-gray: #c2b0c1;
 
+$md: 600px;
+// mixing
+@mixin resp($width) {
+    @media only screen and (min-width: $width) {
+        @content;
+    }
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -9,44 +17,89 @@ $color-gray: #c2b0c1;
 }
 body {
     background: #f4dee4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
     font-family: "Quicksand", sans-serif;
     flex-flow: column wrap;
     gap: 100px;
 }
 
+.audio-wrap {
+    margin: 100px auto 0px auto;
+    width: 95%;
+    @include resp ($md) {
+        width: 530px;
+    }
+}
+
 .audio-player {
-    width: 75%;
-    max-width: 450px;
+    // max-width: 450px;
+    padding: 10px 15px;
     background-color: black;
     border-radius: 8px;
-    height: 75px;
-    padding: 10px 15px;
-    display: flex;
+    // height: 75px;
+    display: grid;
+    grid-template-columns: 35px 1fr 75px 28px 0px;
+    grid-template-rows: 1fr 40px;
+    grid-template-areas: "control-btns duration-slider audio-duration audio-speed" "sound sound sound sound";
     align-items: center;
-    justify-content: space-between;
-    .play-btn {
-        width: 50px;
-        height: 50px;
-        cursor: pointer;
-        background: transparent url("../assets/play-btn.svg") no-repeat center
-            center;
-        background-size: 100%;
-        border: none;
+    column-gap: 15px;
+    @include resp($md) {
+        grid-template-areas: "control-btns duration-slider audio-duration audio-speed sound";
+        grid-template-columns: 45px 182px 75px 28px 120px;
+        // grid-template-columns: 45px 1fr 75px 28px;
+        grid-template-rows: 1fr;
+        padding: 15px 20px;
+        width: 410px;
+        overflow: hidden;
+        transition: 0.5s all;
+        transition-delay: 0.4s;
+        @include resp($md) {
+            &:hover {
+                transition-delay: 0.2s;
+                grid-template-columns: 45px 182px 75px 28px;
+                width: 550px;
+                // sound control animation 
+                .sound-control {
+                    transition-delay: 0.4s;
+                    opacity: 1;
+                }
+            }
+        }
     }
-    .pause-btn {
-        @extend .play-btn;
-        background-image: url("../assets/pause-btn.svg");
-        display: none;
+    .control-btns {
+        grid-area: control-btns;
+        width: 35px;
+        height: 35px;
+        @include resp($md) {
+            width: 45px;
+            height: 45px;
+        }
+        .play-btn {
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            background: transparent url("../assets/play-btn.svg") no-repeat
+                center center;
+            background-size: 100%;
+            border: none;
+        }
+        .pause-btn {
+            @extend .play-btn;
+            background-image: url("../assets/pause-btn.svg");
+            display: none;
+        }
+    }
+
+    // hover property
+    &:hover {
+        height: initial;
     }
 }
 
 .duration-slider {
+    grid-area: duration-slider;
     // margin: 10px 2.5%;
-    width: 58%;
+    width: 100%;
     position: relative;
     -webkit-appearance: none;
     outline: none;
@@ -67,15 +120,20 @@ body {
 }
 .duration-slider::before {
     width: var(--volume-before-width);
+    @include resp($md) {
+        width: 182px;
+    }
 }
 
 .audio-duration {
+    grid-area: audio-duration;
     font-size: 13px;
     color: white;
 }
 
 // audio spreed
 .audio-speed {
+    grid-area: audio-speed;
     background-color: transparent;
     border: none;
     outline: none;
@@ -119,9 +177,17 @@ input[type="range"]::-webkit-slider-thumb {
 // }
 
 .audio-sound {
-    width: 20px;
-    height: 20px;
-    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    column-gap: 15px;
+    @include resp($md) {
+        column-gap: 8px;
+    }
+    // width: 20px;
+    // height: 20px;
+    // position: relative;
     // display: none;
     .icon {
         background: transparent url("../assets/volume-up.png") no-repeat center
@@ -134,36 +200,40 @@ input[type="range"]::-webkit-slider-thumb {
         height: 20px;
     }
     .sound-btn-wrap {
-        display: none;
-        transform: translateX(-10px);
+        transform: translateX(0px);
+        position: absolute;
+        left: 0px;
+        top: -28px;
+        width: 125px;
+        height: 75.5px;
+        // background-color: rgb(98, 98, 98);
+        background-color: black;
+        display: flex;
+        align-items: center;
+        column-gap: 10px;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+        padding-right: 10px;
+        transition: all 0.5s;
     }
-    &:hover {
-        .sound-btn-wrap {
-            transform: translateX(0px);
-            position: absolute;
-            left: 0px;
-            top: -28px;
-            width: 125px;
-            height: 75.5px;
-            // background-color: rgb(98, 98, 98);
-            background-color: black;
-            display: flex;
-            align-items: center;
-            column-gap: 10px;
-            border-top-right-radius: 8px;
-            border-bottom-right-radius: 8px;
-            padding-right: 10px;
-            transition: all 0.5s;
-            .icon {
-                margin-top: 2px;
-            }
-            #sound-control {
-                flex: 1;
-                margin-top: -1px;
-                --max: 100;
-                --min: 0;
-                --value: 100;
-            }
-        }
+    .icon {
+        margin-top: 2px;
+    }
+    #sound-control {
+        flex: 1;
+        margin-top: -1px;
+        --max: 100;
+        --min: 0;
+        --value: 100;
+    }
+}
+
+.sound-control {
+    grid-area: sound;
+    padding-left: 5px;
+    opacity: 0;
+    transition: 0.5s all;
+    @include resp($md) {
+        padding-left: 0px;
     }
 }

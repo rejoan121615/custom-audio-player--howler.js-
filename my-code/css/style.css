@@ -7,41 +7,86 @@
 
 body {
   background: #f4dee4;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100vh;
   font-family: "Quicksand", sans-serif;
   flex-flow: column wrap;
   gap: 100px;
 }
 
+.audio-wrap {
+  margin: 100px auto 0px auto;
+  width: 95%;
+}
+@media only screen and (min-width: 600px) {
+  .audio-wrap {
+    width: 530px;
+  }
+}
+
 .audio-player {
-  width: 75%;
-  max-width: 450px;
+  padding: 10px 15px;
   background-color: black;
   border-radius: 8px;
-  height: 75px;
-  padding: 10px 15px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 35px 1fr 75px 28px 0px;
+  grid-template-rows: 1fr 40px;
+  grid-template-areas: "control-btns duration-slider audio-duration audio-speed" "sound sound sound sound";
   align-items: center;
-  justify-content: space-between;
+  column-gap: 15px;
 }
-.audio-player .play-btn, .audio-player .pause-btn {
-  width: 50px;
-  height: 50px;
+@media only screen and (min-width: 600px) {
+  .audio-player {
+    grid-template-areas: "control-btns duration-slider audio-duration audio-speed sound";
+    grid-template-columns: 45px 182px 75px 28px 120px;
+    grid-template-rows: 1fr;
+    padding: 15px 20px;
+    width: 410px;
+    overflow: hidden;
+    transition: 0.5s all;
+    transition-delay: 0.4s;
+  }
+}
+@media only screen and (min-width: 600px) and (min-width: 600px) {
+  .audio-player:hover {
+    transition-delay: 0.2s;
+    grid-template-columns: 45px 182px 75px 28px;
+    width: 550px;
+  }
+  .audio-player:hover .sound-control {
+    transition-delay: 0.4s;
+    opacity: 1;
+  }
+}
+.audio-player .control-btns {
+  grid-area: control-btns;
+  width: 35px;
+  height: 35px;
+}
+@media only screen and (min-width: 600px) {
+  .audio-player .control-btns {
+    width: 45px;
+    height: 45px;
+  }
+}
+.audio-player .control-btns .play-btn, .audio-player .control-btns .pause-btn {
+  width: 100%;
+  height: 100%;
   cursor: pointer;
   background: transparent url("../assets/play-btn.svg") no-repeat center center;
   background-size: 100%;
   border: none;
 }
-.audio-player .pause-btn {
+.audio-player .control-btns .pause-btn {
   background-image: url("../assets/pause-btn.svg");
   display: none;
 }
+.audio-player:hover {
+  height: initial;
+}
 
 .duration-slider {
-  width: 58%;
+  grid-area: duration-slider;
+  width: 100%;
   position: relative;
   -webkit-appearance: none;
   outline: none;
@@ -59,13 +104,20 @@ body {
 .duration-slider::before {
   width: var(--volume-before-width);
 }
+@media only screen and (min-width: 600px) {
+  .duration-slider::before {
+    width: 182px;
+  }
+}
 
 .audio-duration {
+  grid-area: audio-duration;
   font-size: 13px;
   color: white;
 }
 
 .audio-speed {
+  grid-area: audio-speed;
   background-color: transparent;
   border: none;
   outline: none;
@@ -100,9 +152,16 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .audio-sound {
-  width: 20px;
-  height: 20px;
-  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  column-gap: 15px;
+}
+@media only screen and (min-width: 600px) {
+  .audio-sound {
+    column-gap: 8px;
+  }
 }
 .audio-sound .icon {
   background: transparent url("../assets/volume-up.png") no-repeat center center;
@@ -114,10 +173,6 @@ input[type=range]::-webkit-slider-thumb {
   height: 20px;
 }
 .audio-sound .sound-btn-wrap {
-  display: none;
-  transform: translateX(-10px);
-}
-.audio-sound:hover .sound-btn-wrap {
   transform: translateX(0px);
   position: absolute;
   left: 0px;
@@ -133,15 +188,27 @@ input[type=range]::-webkit-slider-thumb {
   padding-right: 10px;
   transition: all 0.5s;
 }
-.audio-sound:hover .sound-btn-wrap .icon {
+.audio-sound .icon {
   margin-top: 2px;
 }
-.audio-sound:hover .sound-btn-wrap #sound-control {
+.audio-sound #sound-control {
   flex: 1;
   margin-top: -1px;
   --max: 100;
   --min: 0;
   --value: 100;
+}
+
+.sound-control {
+  grid-area: sound;
+  padding-left: 5px;
+  opacity: 0;
+  transition: 0.5s all;
+}
+@media only screen and (min-width: 600px) {
+  .sound-control {
+    padding-left: 0px;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */
