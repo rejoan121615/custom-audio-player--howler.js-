@@ -70,22 +70,63 @@
         </div>
         {% endif %}
 
-        <div class="audio-player">
-            <button class="play-btn" id="playBtn" ></button>
-            <button class="pause-btn" id="pauseBtn" ></button>
+        <div class="audio-wrap">
+                            <div class="audio-player">
+                                <div class="control-btns">
+                                    <button
+                                        class="play-btn"
+                                        id="playBtn"
+                                    ></button>
+                                    <button
+                                        class="pause-btn"
+                                        id="pauseBtn"
+                                    ></button>
+                                </div>
 
-            <input min="0" max="0" type="range" class="duration-slider styled-slider slider-progress" id="progress" />
-            <div class="audio-duration">
-              <span class="audio-duration-elapsed" id="current-time">0:00</span> / <span class="audio-duration-second" id="duration">0:00</span>
-            </div>
+                                <input
+                                    min="0"
+                                    max="0"
+                                    type="range"
+                                    class="duration-slider styled-slider slider-progress"
+                                    id="progress"
+                                />
+                                <div class="audio-duration">
+                                    <span
+                                        class="audio-duration-elapsed"
+                                        id="current-time"
+                                        >0:00</span
+                                    >
+                                    /
+                                    <span
+                                        class="audio-duration-second"
+                                        id="duration"
+                                        >0:00</span
+                                    >
+                                </div>
 
-            <select class="audio-speed" id="speed1">
-                <option value="0.5">0.5x</option>
-                <option value="1" selected>1x</option>
-                <option value="1.5">1.5x</option>
-            </select>
-            <button class="audio-sound up" id="sound1"></button>
-        </div>
+                                <select class="audio-speed" id="speed">
+                                    <option value="0.5">0.5x</option>
+                                    <option value="1" selected>1x</option>
+                                    <option value="1.5">1.5x</option>
+                                </select>
+                                <div class="sound-control">
+                                    <div class="audio-sound up" id="sound">
+                                        <!-- <div class="icon"></div> -->
+                                        <!-- <div class="sound-btn-wrap"> -->
+                                        <div class="icon"></div>
+                                        <input
+                                            min="0"
+                                            max="100"
+                                            value="100"
+                                            type="range"
+                                            class="duration-slider styled-slider slider-progress"
+                                            id="sound-control"
+                                        />
+                                        <!-- </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
         
         <div class="custom-podcast__popup-image-wrap">
