@@ -1,14 +1,4 @@
-var wrapperID = document.querySelector(".audio-player");
-const playBtn = document.querySelector("#playBtn");
-const pauseBtn = document.querySelector("#pauseBtn");
-const progressBar = document.querySelector("#progress");
-const audioDuration = document.querySelector(".audio-duration");
-const elapsedTime = document.querySelector("#current-time");
-const duration = document.querySelector("#duration");
-const audioSpeed = document.querySelector("#speed");
-// const then sound switch
-const sound = document.querySelector("#sound");
-const soundController = document.querySelector("#sound-control");
+
 
 function Player(data) {
     this.howl = new Howl({
@@ -85,9 +75,9 @@ function Player(data) {
 
     // volume control btn
     this.volume = function (value) {
-        // control volume 
+        // control volume
         this.howl.volume(Number((1 / 100) * value).toFixed(2));
-        // control progress bar 
+        // control progress bar
         soundController.style.setProperty("--value", this.format(value));
         // control sound icon
         const iconList = sound.querySelectorAll(".icon");
@@ -132,33 +122,55 @@ function Player(data) {
     };
 }
 
-// Setup our new audio player class and pass it the playlist.
-var player = new Player({
-    file: "https://s3.amazonaws.com/unode1/assets/7900/E5MUGJhTDyCYa5addUFy_SSPOD_MSREEMAH_091222_Full_v1.1%20(1).mp3",
-});
+// select all cutom podcast section
+let podcasts = document.querySelectorAll(".custom-podcast-section");
+if (podcasts.length) {
+    
+    // loop over podcast
+    podcasts.forEach((podcast) => {
+        // parent podcast
+        const wrapperTag = document.querySelector(`#${podcast.id}`);
+        // all tag selector 
+        var wrapperID = document.querySelector(".audio-player");
+        const playBtn = document.querySelector("#playBtn");
+        const pauseBtn = document.querySelector("#pauseBtn");
+        const progressBar = document.querySelector("#progress");
+        const audioDuration = document.querySelector(".audio-duration");
+        const elapsedTime = document.querySelector("#current-time");
+        const duration = document.querySelector("#duration");
+        const audioSpeed = document.querySelector("#speed");
+        const sound = document.querySelector("#sound");
+        const soundController = document.querySelector("#sound-control");
+        var audio_src = wrapperTag.dataset.src;
+        // create player object 
+        var player = new Player({
+            file: `${audio_src}`,
+        });
 
-// Bind our player controls.
-playBtn.addEventListener("click", function () {
-    // player.play();
-    player.play();
-});
-pauseBtn.addEventListener("click", function () {
-    player.pause();
-});
-audioSpeed.addEventListener("change", (e) => {
-    player.playbackSpeed(e.target.value);
-});
-// progress bar event
-progressBar.addEventListener("change", (e) => {
-    player.progressHandler("stop", e.target.value);
-});
+        // Bind our player controls.
+        playBtn.addEventListener("click", function () {
+            // player.play();
+            player.play();
+        });
+        pauseBtn.addEventListener("click", function () {
+            player.pause();
+        });
+        audioSpeed.addEventListener("change", (e) => {
+            player.playbackSpeed(e.target.value);
+        });
+        // progress bar event
+        progressBar.addEventListener("change", (e) => {
+            player.progressHandler("stop", e.target.value);
+        });
 
-progressBar.addEventListener("input", (e) => {
-    player.progressHandler("start", e.target.value);
-});
+        progressBar.addEventListener("input", (e) => {
+            player.progressHandler("start", e.target.value);
+        });
 
-// sound control event
-soundController.addEventListener("input", (e) => {
-    // console.log(((1 / 100) * e.target.value).toFixed(2));
-    player.volume(e.target.value);
-});
+        // sound control event
+        soundController.addEventListener("input", (e) => {
+            // console.log(((1 / 100) * e.target.value).toFixed(2));
+            player.volume(e.target.value);
+        });
+    });
+}
