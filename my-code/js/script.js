@@ -1,10 +1,17 @@
-
-
-function Player(data) {
+function Player({
+    file,
+    playBtn,
+    pauseBtn,
+    progressBar,
+    elapsedTime,
+    duration,
+    sound,
+    soundController,
+}) {
     this.howl = new Howl({
-        src: data.file,
+        src: file,
         html5: true,
-        defer: true,
+        defer: true, // control the lazy loading
         onload: () => {
             // format progress bar
             progressBar.style.setProperty(
@@ -18,7 +25,6 @@ function Player(data) {
             duration.innerHTML = this.formatTime(
                 this.format(this.howl.duration())
             );
-            console.log(this.howl);
         },
         onplay: () => {
             playBtn.style.display = "none";
@@ -125,26 +131,33 @@ function Player(data) {
 // select all cutom podcast section
 let podcasts = document.querySelectorAll(".custom-podcast-section");
 if (podcasts.length) {
-    
     // loop over podcast
     podcasts.forEach((podcast) => {
         // parent podcast
         const wrapperTag = document.querySelector(`#${podcast.id}`);
-        // all tag selector 
-        var wrapperID = document.querySelector(".audio-player");
-        const playBtn = document.querySelector("#playBtn");
-        const pauseBtn = document.querySelector("#pauseBtn");
-        const progressBar = document.querySelector("#progress");
-        const audioDuration = document.querySelector(".audio-duration");
-        const elapsedTime = document.querySelector("#current-time");
-        const duration = document.querySelector("#duration");
-        const audioSpeed = document.querySelector("#speed");
-        const sound = document.querySelector("#sound");
-        const soundController = document.querySelector("#sound-control");
+        console.log()
+        // all tag selector
+        const playBtn = wrapperTag.querySelector("#playBtn");
+        const pauseBtn = wrapperTag.querySelector("#pauseBtn");
+        const progressBar = wrapperTag.querySelector("#progress");
+        const audioDuration = wrapperTag.querySelector(".audio-duration");
+        const elapsedTime = wrapperTag.querySelector("#current-time");
+        const duration = wrapperTag.querySelector("#duration");
+        const audioSpeed = wrapperTag.querySelector("#speed");
+        const sound = wrapperTag.querySelector("#sound");
+        const soundController = wrapperTag.querySelector("#sound-control");
         var audio_src = wrapperTag.dataset.src;
-        // create player object 
+        // // create player object
         var player = new Player({
             file: `${audio_src}`,
+            // pass all the tag name to the player object
+            playBtn,
+            pauseBtn,
+            progressBar,
+            elapsedTime,
+            duration,
+            sound,
+            soundController,
         });
 
         // Bind our player controls.
