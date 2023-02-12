@@ -43,12 +43,12 @@ body {
     width: 410px;
     overflow: hidden;
     transition: 0.5s all;
-    transition-delay: 0.4s;
+    transition-delay: 0.2s;
   }
 }
 @media only screen and (min-width: 600px) and (min-width: 600px) {
   .audio-player:hover {
-    transition-delay: 0.2s;
+    transition-delay: 0s;
     grid-template-columns: 45px 182px 75px 28px;
     width: 550px;
   }
