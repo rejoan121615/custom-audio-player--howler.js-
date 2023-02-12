@@ -1,3 +1,4 @@
+// re-usable global player object 
 function Player({
     file,
     playBtn,
@@ -129,13 +130,13 @@ function Player({
 }
 
 // select all cutom podcast section
-let podcasts = document.querySelectorAll(".custom-podcast-section");
+// update your podcast id --------------------------------------------------------------------------
+let podcasts = document.querySelectorAll(".custom-podcast-section"); 
 if (podcasts.length) {
     // loop over podcast
     podcasts.forEach((podcast) => {
         // parent podcast
         const wrapperTag = document.querySelector(`#${podcast.id}`);
-        console.log()
         // all tag selector
         const playBtn = wrapperTag.querySelector("#playBtn");
         const pauseBtn = wrapperTag.querySelector("#pauseBtn");
@@ -185,5 +186,8 @@ if (podcasts.length) {
             // console.log(((1 / 100) * e.target.value).toFixed(2));
             player.volume(e.target.value);
         });
+
+        // custom handler function for separate prodcust 
+        
     });
 }
