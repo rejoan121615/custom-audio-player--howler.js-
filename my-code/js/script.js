@@ -138,6 +138,7 @@ if (podcasts.length) {
         // parent podcast
         const wrapperTag = document.querySelector(`#${podcast.id}`);
         // all tag selector
+        const audioPlayer = wrapperTag.querySelector(".audio-player");
         const playBtn = wrapperTag.querySelector("#playBtn");
         const pauseBtn = wrapperTag.querySelector("#pauseBtn");
         const progressBar = wrapperTag.querySelector("#progress");
@@ -147,6 +148,7 @@ if (podcasts.length) {
         const audioSpeed = wrapperTag.querySelector("#speed");
         const sound = wrapperTag.querySelector("#sound");
         const soundController = wrapperTag.querySelector("#sound-control");
+        const soundControlWrap = wrapperTag.querySelector(".sound-control");
         var audio_src = wrapperTag.dataset.src;
         // // create player object
         var player = new Player({
@@ -187,7 +189,20 @@ if (podcasts.length) {
             player.volume(e.target.value);
         });
 
-        // custom handler function for separate prodcust 
+        // custom handler function for separate prodcust
         
+        
+        // sound button animation 
+        soundControlWrap.addEventListener('mouseenter', () => {
+            // audioPlayer.style.width = '550px';
+            audioPlayer.classList.add('animate');
+            console.log(soundController)
+            soundController.classList.add('animate')
+        })
+        soundControlWrap.addEventListener('mouseleave', () => {
+            // audioPlayer.style.width = '430px';
+            audioPlayer.classList.remove('animate');
+            soundController.classList.remove("animate");
+        })
     });
 }

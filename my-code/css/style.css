@@ -19,7 +19,7 @@ input[type=range].styled-slider::-webkit-slider-thumb {
   width: 15px;
   height: 15px;
   border-radius: 100px;
-  background: #FFFFFF;
+  background: #ffffff;
   border: none;
   box-shadow: 0 0 2px #808080;
   margin-top: calc(max((1em - 8px - 1px) * 0.5, 0px) - 7.5px);
@@ -42,7 +42,7 @@ input[type=range].styled-slider:active::-webkit-slider-runnable-track {
 }
 
 input[type=range].styled-slider.slider-progress::-webkit-slider-runnable-track {
-  background: linear-gradient(#FFFFFF, #FFFFFF) 0/var(--sx) 100% no-repeat, #808080;
+  background: linear-gradient(#ffffff, #ffffff) 0/var(--sx) 100% no-repeat, #808080;
 }
 
 /*mozilla*/
@@ -50,7 +50,7 @@ input[type=range].styled-slider::-moz-range-thumb {
   width: 15px;
   height: 15px;
   border-radius: 100px;
-  background: #FFFFFF;
+  background: #ffffff;
   border: none;
   box-shadow: 0 0 2px #808080;
 }
@@ -72,7 +72,7 @@ input[type=range].styled-slider:active::-moz-range-track {
 }
 
 input[type=range].styled-slider.slider-progress::-moz-range-track {
-  background: linear-gradient(#FFFFFF, #FFFFFF) 0/var(--sx) 100% no-repeat, #808080;
+  background: linear-gradient(#ffffff, #ffffff) 0/var(--sx) 100% no-repeat, #808080;
 }
 
 /*ms*/
@@ -90,7 +90,7 @@ input[type=range].styled-slider::-ms-thumb {
   width: 15px;
   height: 15px;
   border-radius: 100px;
-  background: #FFFFFF;
+  background: #ffffff;
   border: none;
   box-shadow: 0 0 2px #808080;
   margin-top: 0;
@@ -118,7 +118,7 @@ input[type=range].styled-slider.slider-progress::-ms-fill-lower {
   height: 5px;
   border-radius: 0.5em 0 0 0.5em;
   margin: -1px 0 -1px -1px;
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid #b2b2b2;
   border-right-width: 0;
 }
@@ -164,21 +164,15 @@ body {
     grid-template-columns: 45px 182px 75px 28px 120px;
     grid-template-rows: 1fr;
     padding: 15px 20px;
-    width: 410px;
+    width: 450px;
     overflow: hidden;
-    transition: 0.5s all;
-    transition-delay: 0.2s;
+    transition: 0.8s ease 0.35s all;
   }
 }
 @media only screen and (min-width: 600px) and (min-width: 600px) {
-  .audio-player:hover {
-    transition-delay: 0s;
-    grid-template-columns: 45px 182px 75px 28px;
+  .audio-player.animate {
+    transition: 0.4s ease 0s all;
     width: 550px;
-  }
-  .audio-player:hover .sound-control {
-    transition-delay: 0.4s;
-    opacity: 1;
   }
 }
 .audio-player .control-btns {
@@ -332,7 +326,23 @@ input[type=range]::-webkit-slider-thumb {
 @media only screen and (min-width: 600px) {
   .sound-control {
     padding-left: 0px;
+    opacity: 1;
+  }
+}
+@media only screen and (min-width: 600px) {
+  .sound-control #sound-control {
+    width: 0px;
+    margin-top: 3px;
+    transition: 0.35s ease 0.4s all;
+    flex-grow: 0;
     opacity: 0;
+  }
+}
+@media only screen and (min-width: 600px) {
+  .sound-control #sound-control.animate {
+    transition: 0.25s ease 0.2s all;
+    width: 90px;
+    opacity: 1;
   }
 }
 
